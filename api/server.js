@@ -22,6 +22,7 @@ app.use(cookieParser());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/todos', require('./routes/todos'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/groups', require('./routes/groups'));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
