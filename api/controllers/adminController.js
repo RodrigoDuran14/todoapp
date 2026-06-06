@@ -4,8 +4,17 @@ const Todo = require('../models/Todo');
 // Get all users
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find().select('-password');
-    res.json(users);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const users = await User.find().select('-password').skip(skip).limit(limit);
+    const total = await User.countDocuments();
+    res.json({
+      data: users,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -46,8 +55,20 @@ const deleteUser = async (req, res) => {
 // Get all todos (admin view)
 const getAllTodos = async (req, res) => {
   try {
-    const todos = await Todo.find().populate('user', 'username email');
-    res.json(todos);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const todos = await Todo.find()
+      .populate('user', 'username email')
+      .skip(skip)
+      .limit(limit);
+    const total = await Todo.countDocuments();
+    res.json({
+      data: todos,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

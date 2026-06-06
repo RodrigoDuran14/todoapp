@@ -1,9 +1,9 @@
 import apiClient from './client';
 
 export const adminAPI = {
-  getUsers: () => apiClient.get('/api/admin/users'),
+  getUsers: (page = 1, limit = 10) => apiClient.get('/api/admin/users', { params: { page, limit } }),
   updateUserRole: (userId, role) => apiClient.put(`/api/admin/users/${userId}/role`, { role }),
   deleteUser: (userId) => apiClient.delete(`/api/admin/users/${userId}`),
-  getAllTodos: () => apiClient.get('/api/admin/todos'),
+  getAllTodos: (page = 1, limit = 10) => apiClient.get('/api/admin/todos', { params: { page, limit } }),
   deleteAnyTodo: (todoId) => apiClient.delete(`/api/admin/todos/${todoId}`),
 };

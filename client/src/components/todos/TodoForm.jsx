@@ -1,45 +1,132 @@
-import { useState } from 'react';
-import { todosAPI } from '../../api/todos';
-import { Plus } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X } from 'lucide-react';
+import { format } from 'date-fns';
+import Dropdown from '../common/Dropdown';
+import Input from '../common/Input';
+import Button from '../common/Button';
 
-const TodoForm = ({ onAdd }) => {
+const TodoForm = ({ isOpen, onClose, onSubmit, initialData = null, groups = [], todos = [], defaultParentId = null, defaultGroupId = null }) => {
   const [text, setText] = useState('');
+  const [priority, setPriority] = useState('medium');
+  const [dueDate, setDueDate] = useState('');
+  const [groupId, setGroupId] = useState('');
+  const [parentId, setParentId] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const priorityOptions = [
+    { value: 'low', label: '🟢 Baja' },
+    { value: 'medium', label: '🟡 Media' },
+    { value: 'high', label: '🔴 Alta' }
+  ];
+
+  const groupOptions = [
+    { value: '', label: '📁 Sin grupo' },
+    ...groups.map(g => ({ value: g._id, label: g.name }))
+  ];
+
+  const getParentOptions = () => {
+    let filtered = todos.filter(t => t._id !== initialData?._id);
+    if (groupId) {
+      filtered = filtered.filter(t => t.groupId === groupId);
+    } else {
+      filtered = filtered.filter(t => !t.groupId);
+    }
+    return [
+      { value: '', label: '📌 Ninguna (tarea principal)' },
+      ...filtered.map(t => ({ value: t._id, label: t.text }))
+    ];
+  };
+
+  useEffect(() => {
+    if (initialData) {
+      setText(initialData.text);
+      setPriority(initialData.priority);
+      setDueDate(initialData.dueDate ? format(new Date(initialData.dueDate), 'yyyy-MM-dd') : '');
+      setGroupId(initialData.groupId?._id || initialData.groupId || '');
+      setParentId(initialData.parentId || '');
+    } else {
+      setText('');
+      setPriority('medium');
+      setDueDate('');
+      setGroupId(defaultGroupId || '');
+      setParentId(defaultParentId || '');
+    }
+  }, [initialData, defaultParentId, defaultGroupId, isOpen]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!text.trim()) return;
     setLoading(true);
-    try {
-      const { data } = await todosAPI.create(text);
-      onAdd(data);
-      setText('');
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    await onSubmit({
+      text,
+      priority,
+      dueDate: dueDate ? new Date(dueDate).toISOString() : null,
+      groupId: groupId || null,
+      parentId: parentId || null
+    });
+    setLoading(false);
+    onClose();
   };
 
+  if (!isOpen) return null;
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="¿Qué tienes que hacer hoy?"
-        className="flex-1 px-5 py-3 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-        disabled={loading}
-      />
-      <button
-        type="submit"
-        disabled={loading || !text.trim()}
-        className="px-6 py-3 bg-linear-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100 transition flex items-center justify-center gap-2"
-      >
-        <Plus size={18} />
-        {loading ? 'Agregando...' : 'Agregar tarea'}
-      </button>
-    </form>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md p-6">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+            {initialData ? 'Editar tarea' : 'Nueva tarea'}
+          </h3>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+            <X size={20} />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Descripción de la tarea"
+            required
+            autoFocus
+          />
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Prioridad
+              </label>
+              <Dropdown options={priorityOptions} value={priority} onChange={setPriority} />
+            </div>
+            <div className="flex-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Fecha límite
+              </label>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="w-full px-3 py-2 rounded-lg border border-indigo-200 dark:border-indigo-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-white"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Grupo</label>
+            <Dropdown options={groupOptions} value={groupId} onChange={setGroupId} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tarea padre (subtask de)</label>
+            <Dropdown options={getParentOptions()} value={parentId} onChange={setParentId} />
+          </div>
+
+          <Button type="submit" isLoading={loading} className="w-full">
+            {initialData ? 'Actualizar' : 'Crear tarea'}
+          </Button>
+        </form>
+      </div>
+    </div>
   );
 };
 
