@@ -25,7 +25,8 @@ app.use('/api/admin', require('./routes/admin'));
 app.use('/api/groups', require('./routes/groups'));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI,{  serverSelectionTimeoutMS: 30000, // 30 segundos
+  socketTimeoutMS: 45000,})
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
