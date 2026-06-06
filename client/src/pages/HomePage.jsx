@@ -115,7 +115,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl p-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div>
               <p className="text-sm text-gray-500">Completadas</p>
               <p className="text-2xl font-bold text-green-600">{completed}</p>
@@ -124,7 +124,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl p-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div>
               <p className="text-sm text-gray-500">Pendientes</p>
               <p className="text-2xl font-bold text-orange-600">{pending}</p>

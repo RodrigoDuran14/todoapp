@@ -40,7 +40,7 @@ export const ToastProvider = ({ children }) => {
 // Componente de contenedor de toasts
 const ToastContainer = ({ toasts, removeToast }) => {
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
+    <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
       {toasts.map(toast => (
         <ToastItem key={toast.id} toast={toast} onClose={() => removeToast(toast.id)} />
       ))}

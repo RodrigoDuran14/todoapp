@@ -5,7 +5,7 @@ const Todo = require("../models/Todo");
 // Get user's todos (admin sees all)
 const getTodos = async (req, res) => {
   try {
-    let query = req.user.role === "admin" ? {} : { user: req.user.id };
+    let query =  {user: req.user.id} ;
     const todos = await Todo.find(query)
       .populate("user", "username")
       .populate("groupId", "name color")
@@ -21,7 +21,6 @@ const createTodo = async (req, res) => {
   try {
     const { text, priority, dueDate, groupId, parentId } = req.body;
 
-    console.log(req.body)
     if (!text || typeof text !== 'string') return res.status(400).json({ message: "Text is required" });
 
         if (groupId) {

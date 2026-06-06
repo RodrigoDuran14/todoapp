@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { format } from 'date-fns';
 import Dropdown from '../common/Dropdown';
+import Input from '../common/Input';
+import Button from '../common/Button';
 
 const TodoForm = ({ isOpen, onClose, onSubmit, initialData = null, groups = [], todos = [], defaultParentId = null, defaultGroupId = null }) => {
   const [text, setText] = useState('');
@@ -22,7 +24,6 @@ const TodoForm = ({ isOpen, onClose, onSubmit, initialData = null, groups = [], 
     ...groups.map(g => ({ value: g._id, label: g.name }))
   ];
 
-  // Opciones de tareas padre (solo tareas que no sean la actual, y del mismo grupo o sin grupo)
   const getParentOptions = () => {
     let filtered = todos.filter(t => t._id !== initialData?._id);
     if (groupId) {
@@ -81,23 +82,26 @@ const TodoForm = ({ isOpen, onClose, onSubmit, initialData = null, groups = [], 
           </button>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
+          <Input
             type="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Descripción de la tarea"
-            className="w-full px-4 py-2 rounded-xl border border-indigo-200 dark:border-indigo-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-500"
             required
             autoFocus
           />
 
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prioridad</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Prioridad
+              </label>
               <Dropdown options={priorityOptions} value={priority} onChange={setPriority} />
             </div>
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fecha límite</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Fecha límite
+              </label>
               <input
                 type="date"
                 value={dueDate}
@@ -117,13 +121,9 @@ const TodoForm = ({ isOpen, onClose, onSubmit, initialData = null, groups = [], 
             <Dropdown options={getParentOptions()} value={parentId} onChange={setParentId} />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition disabled:opacity-50"
-          >
-            {loading ? 'Guardando...' : (initialData ? 'Actualizar' : 'Crear tarea')}
-          </button>
+          <Button type="submit" isLoading={loading} className="w-full">
+            {initialData ? 'Actualizar' : 'Crear tarea'}
+          </Button>
         </form>
       </div>
     </div>
