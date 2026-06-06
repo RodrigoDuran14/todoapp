@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // tu frontend
+  origin: process.env.APP_URL, // tu frontend
   credentials: true
 }));
 app.use(morgan("dev"));
