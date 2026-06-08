@@ -6,6 +6,7 @@ import TodoTreeClientPaginated from "../components/todos/TodoTreeClientPaginated
 import TodoForm from "../components/todos/TodoForm";
 import { useToast } from "../context/ToastContext";
 import { CheckCircle2, Circle, TrendingUp } from "lucide-react";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 const HomePage = () => {
   const [groups, setGroups] = useState([]);
@@ -99,7 +100,7 @@ const HomePage = () => {
     else todosByGroup["no-group"].push(todo);
   });
 
-  if (loading) return <div className="text-center py-20">Cargando...</div>;
+  if (loading) return <LoadingSpinner/>
 
   return (
     <div className="space-y-6">
