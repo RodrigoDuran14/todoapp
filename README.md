@@ -1,24 +1,16 @@
-```
-<div align="center">
-  <img src="https://img.shields.io/badge/MERN-Stack-blue?style=for-the-badge&logo=mongodb&logoColor=white" />
-  <img src="https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
-  <img src="https://img.shields.io/badge/PWA-Ready-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white" />
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
-  <br />
-  <img src="https://img.shields.io/github/stars/tu-usuario/taskflow?style=social" />
-  <img src="https://img.shields.io/github/forks/tu-usuario/taskflow?style=social" />
-  <br />
-  <br />
-  <img src="https://taskflowdev.vercel.app/logo512.png" width="120" />
-  <h1>📝 TaskFlow</h1>
-  <p><strong>Tu gestor de tareas moderno – grupos, subtareas, prioridades y modo oscuro</strong></p>
-  <p>
-    <a href="https://taskflowdev.vercel.app" target="_blank">🌐 Demo en Vercel</a> •
-    <a href="#-instalación-local">📦 Instalación</a> •
-    <a href="#-stack-tecnológico">🛠️ Stack</a> •
-    <a href="#-características-principales">✨ Features</a>
-  </p>
-</div>
+# 📝 TaskFlow
+
+![MERN Stack](https://img.shields.io/badge/MERN-Stack-blue?style=for-the-badge&logo=mongodb&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![License MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+![GitHub Stars](https://img.shields.io/github/stars/RodrigoDuran14/todoapp?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/RodrigoDuran14/todoapp?style=social)
+
+
+**Tu gestor de tareas moderno – grupos, subtareas, prioridades y modo oscuro**
+
+🌐 [Demo en Vercel](https://taskflowdev.vercel.app) • 📦 [Instalación](#-instalación-local) • 🛠️ [Stack](#-stack-tecnológico) • ✨ [Features](#-características-principales)
 
 ---
 
@@ -53,11 +45,13 @@
 
 ### Herramientas adicionales
 - **ESLint** + **Prettier** (código limpio)
+
 ---
 
 ## 🚀 Demo en vivo
 
-👉 **Frontend:** [https://taskflowdev.vercel.app](https://taskflowdev.vercel.app)
+👉 **Frontend:** [https://taskflowdev.vercel.app](https://taskflowdev.vercel.app)  
+
 👉 **Backend:** [https://taskflowapi-zeta.vercel.app](https://taskflowapi-zeta.vercel.app)
 
 ---
@@ -75,10 +69,9 @@
    ```bash
    git clone https://github.com/RodrigoDuran14/todoapp.git
    ```
-
 2. **Configura el backend**
    ```bash
-   cd api
+   cd backend
    npm install
    cp .env.example .env   # edita con tus credenciales
    ```
@@ -87,12 +80,11 @@
    PORT=5000
    MONGO_URI=mongodb://localhost:27017/taskflow
    JWT_SECRET=supersecretkey
-   APP_URL=http://localhost:5173
    ```
 
 3. **Configura el frontend**
    ```bash
-   cd ../client
+   cd ../frontend
    npm install
    cp .env.example .env   # ajusta VITE_API_URL si es necesario
    ```
@@ -102,8 +94,8 @@
    ```
 
 4. **Ejecuta en modo desarrollo**
-   - Backend: `cd api && npm run dev` (puerto 5000)
-   - Frontend: `cd client && npm run dev` (puerto 5173)
+   - Backend: `cd backend && npm run dev` (puerto 5000)
+   - Frontend: `cd frontend && npm run dev` (puerto 5173)
 
 5. **Abre** `http://localhost:5173` y comienza a organizar tus tareas.
 
@@ -113,16 +105,15 @@
 
 | Modo claro | Modo oscuro |
 |------------|-------------|
-| ![Light mode](/screenshots/homeclaro.png) | ![Dark mode](/screenshots/homeoscuro.png) |
+| ![Light mode](client/public/screenshots/homeclaro.png) | ![Dark mode](client/public/screenshots/homeoscuro.png) |
 
 | Panel de administración | Panel de administración Dark |
 |------------------------|----------------------------|
-| ![Admin panel](/screenshots/panelAdminClaro.png) | ![Admin panel Dark](/screenshots/panelAdminOscuro.png) |
+| ![Admin panel](client/public/screenshots/panelclaro.png) | ![Admin panel Dark](client/public/screenshots/paneloscuro.png) |
 
 | Vista de form tareas | Vista de form tareas Dark|
 |------------------------|----------------------------|
-| ![Admin panel](/screenshots/nuevatareagrupoclaro.png) | ![Admin panel Dark](/screenshots/nuevatareaoscuro.png) |
-
+| ![Admin panel](client/public/screenshots/nuevatareagrupoclaro.png) | ![Admin panel Dark](client/public/screenshots/nuevatareaoscuro.png) |
 
 ---
 
@@ -148,14 +139,16 @@
 ## 📧 Contacto
 
 **Autor** – Rodrigo Martin Duran  
-Email: potro_duran96@hotmail.com
-GitHub: [@RodrigoDuran14](https://github.com/RodrigoDuran14)
-Linkedin: [@RodrigoDuran14](https://www.linkedin.com/in/rodrigoduran14)
-Portfolio: [rodrigodurandev.vercel.app](https://rodrigodurandev.vercel.app)
+✉️ Email: potro_duran96@hotmail.com  
+
+🐙 GitHub: [@RodrigoDuran14](https://github.com/RodrigoDuran14)  
+
+🔗 Linkedin: [@RodrigoDuran14](https://www.linkedin.com/in/rodrigoduran14)  
+
+🌐 Portfolio: [rodrigodurandev.vercel.app](https://rodrigodurandev.vercel.app)
 
  ---
 
 <div align="center">
   <sub>Hecho con 💜 y ☕. ¿Te gusta el proyecto? ¡Dale una ⭐ en GitHub!</sub>
 </div>
-```
